@@ -1,0 +1,78 @@
+/* it is a css for default application defines simple behavior of sie */
+
+/* DOCUMENT STYLE */
+body
+{
+    background-color: #EEEEEE;
+}
+
+.container
+{
+    width: 1200px;
+    margin: 0px auto;
+}
+
+.header
+{
+    background-color: #DDDDDD;
+    height: 50px;
+    
+    /* Text properties */
+    color: #999999;
+    font-size: 25px;
+    font-family: monospace;
+    padding-left: 100px;
+    padding-top:10px;
+}
+
+.menu_element
+{
+    float:left;
+    display:block;
+    background-color: #CCCCCC;
+    margin-left:15px;
+}
+.menu_element > a
+{
+    text-decoration: none;
+    color: azure;
+}
+
+
+.menu
+{
+    clear:both;
+}
+
+.content
+{
+    clear:both;
+    padding-top:10px;
+}
+
+/* FORM SETTINGS */
+form
+{
+   border: 1px solid black; 
+}
+h1
+{
+    margin-bottom:-5px;
+    color:#AAAAAA;
+    font-size: 18px;
+}
+form > div > div
+{
+    float:left;
+    min-width: 150px;
+}
+
+form > div > input
+{
+    margin-right:50px;
+}
+
+form > div
+{
+    clear:both;
+}

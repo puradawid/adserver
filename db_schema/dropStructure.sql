@@ -1,0 +1,8 @@
+
+ALTER TABLE ads DROP FOREIGN KEY client;
+ALTER TABLE ads DROP FOREIGN KEY category;
+ALTER TABLE category DROP FOREIGN KEY parent;
+
+DROP TABLE ads;
+DROP TABLE users;
+DROP TABLE category; 

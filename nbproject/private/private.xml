@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/web/index.jsp</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/src/java/pl/edu/pb/adserver/model/controller/UserJpaController.java</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/web/register.jsp</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/src/java/pl/edu/pb/adserver/model/User.java</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/src/java/pl/edu/pb/adserver/model/Ad.java</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/web/WEB-INF/jspf/header.jsp</file>
+            <file>file:/home/dawid/NetBeansProjects/AdServer/test/pl/edu/pb/adserver/model/jdbc/test/AdJdbcTest.java</file>
+        </group>
+    </open-files>
+</project-private>
