@@ -10,8 +10,8 @@
      is a admin user who can manage whole of them with manipulate their content.
      (QuickFix manage help).
 -->
-<jstl:if test="${sessionScope.credencials == 'ADM' || sessionScope.credencials == 'CLI'}">
-    <% List<Ad> ads = AdJdbc.getAllAds(); %>
+<% List<User> %>
+
 <div class="manager">
     <table>
         <jstl:forEach items="${ads}" var="ad">

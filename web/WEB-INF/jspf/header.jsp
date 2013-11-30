@@ -13,7 +13,7 @@
             <div class="menu">
                 <jstl:if test="${sessionScope.user.credencials == 'ADM' }">
                     <div class="menu_element">
-                        <a href="users">Manage users</a>
+                        <a href="user">Manage users</a>
                     </div>
                 </jstl:if>
                 <jstl:if test="${sessionScope.user.credencials == 'CLI'}">

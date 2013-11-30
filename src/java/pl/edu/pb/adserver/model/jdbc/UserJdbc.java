@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import pl.edu.pb.adserver.model.User;
 import static pl.edu.pb.adserver.model.jdbc.Jdbc.executeQuery;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class UserJdbc extends Jdbc {
     public static List<User> getAllUsers()
@@ -73,6 +72,6 @@ public class UserJdbc extends Jdbc {
     {
         String statement = "DELETE FROM user WHERE ";
         //not implemented yet
-        throw new NotImplementedException();
+       // throw new NotImplementedException();
     }
 }

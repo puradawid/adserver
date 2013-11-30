@@ -28,7 +28,7 @@ public class RESTFilter implements Filter {
         mapping = new HashMap<String, String>();
         
         //hardcoded for now
-        mapping.put("users", "/WEB-INF/manage_users.jsp");
+        mapping.put("user", "/userservlet");
         mapping.put("ad", "/WEB-INF/ads.jsp");
         mapping.put("login", "/login.jsp");
         mapping.put("logout", "/logout.jsp");

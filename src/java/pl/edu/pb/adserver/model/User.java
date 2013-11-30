@@ -108,4 +108,8 @@ public class User implements Serializable {
     {
         return type.toString();
     }
+    public void setCredencials(String type)
+    {
+        this.type = UserType.valueOf(type);
+    }
 }

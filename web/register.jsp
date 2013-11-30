@@ -13,9 +13,10 @@
                 request.getParameter("name"),
                 request.getParameter("surname"),
                 request.getParameter("telephone"));
-        (new UserActions()).register(n);
+        boolean done = (new UserActions()).register(n);
+        request.setAttribute("done", done);
     %>
-    
+    <%-- 
     <jstl:catch var="sqlexception" >
     <sql:update dataSource="jdbc/adserver_database" var="result">
         INSERT INTO users (first_name, email, password, telephone, second_name)
@@ -32,6 +33,7 @@
         User already registerd or there is a bug with form
     </jstl:if>
     <jstl:redirect url="/" />
+    --%>
 </jstl:if>
 
         <h1>Register</h1>
@@ -60,7 +62,7 @@
                 <input type="submit" value="register" /> </div>
         </form>
         </jstl:if>
-        <jstl:if test="${param.name != null}">
+        <jstl:if test="${done}">
             Account already registered!
         </jstl:if>
             
