@@ -14,7 +14,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 
 public class ParseableServlet extends HttpServlet {
-    private Map<String, String> buildParamMap(HttpServletRequest request) throws IOException {
+    protected Map<String, String> buildParamMap(HttpServletRequest request) throws IOException {
         Map<String, String> params = new HashMap<String, String>();
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(request.getInputStream()));

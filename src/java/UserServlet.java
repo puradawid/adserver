@@ -72,19 +72,6 @@ public class UserServlet extends ParseableServlet {
         }
     }
 
-    private Map<String, String> buildParamMap(HttpServletRequest request) throws IOException {
-        Map<String, String> params = new HashMap<String, String>();
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader(request.getInputStream()));
-        String data = br.readLine();
-        HttpEntity entity = new StringEntity(data, ContentType.APPLICATION_FORM_URLENCODED);
-        List<NameValuePair> list = URLEncodedUtils.parse(entity);
-        for (NameValuePair pair : list) {
-            params.put(pair.getName(), pair.getValue());
-        }
-        return params;
-    }
-
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) {
         String[] params = parseParams(request);

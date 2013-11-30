@@ -29,7 +29,6 @@ public class RESTFilter implements Filter {
         
         //hardcoded for now
         mapping.put("user", "/userservlet");
-        mapping.put("ad", "/WEB-INF/ads.jsp");
         mapping.put("login", "/login.jsp");
         mapping.put("logout", "/logout.jsp");
         mapping.put("register", "/register.jsp");

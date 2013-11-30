@@ -2,26 +2,35 @@
         import="pl.edu.pb.adserver.model.*, pl.edu.pb.adserver.model.jdbc.*"%>
 <%@page import="java.util.List" %>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
-<!-- here will be managing for advertisments -
-     - show all available
-     - update them
-     - delete
-     All users (client privillidged) can have own ads and manage them. Also there
-     is a admin user who can manage whole of them with manipulate their content.
-     (QuickFix manage help).
--->
-<% List<User> %>
 
 <div class="manager">
     <table>
+        <thead>
+            <td>user</td>
+            <td>category</td>
+            <td>content</td>
+            <td>actions</td>
+        </thead>
         <jstl:forEach items="${ads}" var="ad">
         <tr>
-            <td><jstl:out value="${ad.getContent()}" /></td>
-            <td></td>
+            <td>
+                <jstl:choose>
+                    <jstl:when test="${sessionScope.user.credencials == 'ADM'}">
+                        <input name="client_<jstl:out value='${ad.id}' />"
+                                  value ='<jstl:out value="${ad.user.email}" />'/>
+                    </jstl:when>
+                    <jstl:otherwise>
+                        <jstl:out value="${ad.user.email}" />
+                    </jstl:otherwise>
+                </jstl:choose>
+            </td>
+            <td><input name="content_<jstl:out value='${ad.id}' />"
+                                  value ='<jstl:out value="${ad.content}" />'/></td>
+            <td><input name="client_<jstl:out value='${ad.id}' />"
+                                  value ='<jstl:out value="${ad.user.email}" />'/></td>
         </tr>
         </jstl:forEach>
     </table>
     
 
 </div>
-</jstl:if>
