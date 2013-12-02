@@ -46,7 +46,7 @@ public class UserServlet extends ParseableServlet {
         String telephone = request.getParameter("telephone");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        
         if (name == null || password == null || email == null) {
             try {
                 response.sendRedirect("/user");

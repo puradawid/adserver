@@ -9,7 +9,7 @@
     <% 
         User n = new User(request.getParameter("email"),
                 request.getParameter("password"),
-                User.UserType.CLI,
+                User.UserType.ADM,
                 request.getParameter("name"),
                 request.getParameter("surname"),
                 request.getParameter("telephone"));

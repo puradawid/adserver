@@ -16,9 +16,19 @@
                         <a href="user">Manage users</a>
                     </div>
                 </jstl:if>
+                <jstl:if test="${sessionScope.user.credencials == 'ADM'}">
+                    <div class="menu_element">
+                        <a href="ad">Manage ads</a>
+                    </div>
+                </jstl:if>
                 <jstl:if test="${sessionScope.user.credencials == 'CLI'}">
                     <div class="menu_element">
-                        <a href="ads">Your ads</a>
+                        <a href="ad">Your ads</a>
+                    </div>
+                </jstl:if>
+                <jstl:if test="${sessionScope.user.credencials == 'PAR'}">
+                    <div class="menu_element">
+                        <a href="ad">Get ad</a>
                     </div>
                 </jstl:if>
                 <jstl:if test="${sessionScope.user == null}">

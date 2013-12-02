@@ -6,7 +6,7 @@
 
 package pl.edu.pb.adserver.model.controller;
 
-import com.sun.istack.internal.logging.Logger;
+import java.util.logging.Logger;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -140,7 +140,7 @@ public class UserJpaController implements Serializable {
             return res;
         } catch (Exception e)
         {
-          Logger.getLogger(getClass()).severe(e.getMessage() +
+          Logger.getLogger(getClass().getName()).severe(e.getMessage() +
                   "\n[PARAMS email = "+email+"]");
           return null;
         }finally {

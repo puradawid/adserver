@@ -25,7 +25,7 @@ public class Ad implements Serializable {
     /** Html content for ad */
     protected String content;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "user")
     /** Client id which add ad */
     protected User user;
