@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import pl.edu.pb.adserver.model.Ad;
+import pl.edu.pb.adserver.model.Category;
 import pl.edu.pb.adserver.model.User;
 import pl.edu.pb.adserver.model.controller.AdJpaController;
 import pl.edu.pb.adserver.model.controller.UserJpaController;
@@ -60,7 +61,8 @@ public class AdJdbcTest {
      {
          AdJpaController ajc = new AdJpaController(Persistence.createEntityManagerFactory("AdServerPU"));
          try {
-         ajc.create(new Ad(0, "This is content", Ad.ContentType.picture, null, "hgw"));
+         ajc.create(new Ad(0, "This is content", Ad.ContentType.picture, null, 
+                 new Category("hgw")));
          } catch (PreexistingEntityException e)
          {
              //this entitty still existist in context
@@ -77,7 +79,7 @@ public class AdJdbcTest {
      {
          User u = new User("puradawid@gmail.com", "password", User.UserType.ADM, "Dawid",
          "Pura", "795638387");
-         Ad a = new Ad(0, "This is content", Ad.ContentType.html, u, "all");
+         Ad a = new Ad(0, "This is content", Ad.ContentType.html, u, new Category("all"));
          
          EntityManagerFactory emf = Persistence.createEntityManagerFactory(
                  "AdServerPU");

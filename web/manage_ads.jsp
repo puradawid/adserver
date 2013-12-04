@@ -17,6 +17,7 @@ function removeAd(adId)
     var req = new XMLHttpRequest();
     req.open("DELETE", "${pageContext.servletContext.contextPath}/ad/id/" + adId);
     req.send();
+    location.reload(true);
 }
 
 function updateAd(adId)
@@ -26,11 +27,12 @@ function updateAd(adId)
     params = "";
     var content = findByName("input", "content_" + adId).value;
     var user = findByName("input", "client_" + adId).value;
-    var category = findByName("input", "category_" + adId).value;
+    var category = findByName("select", "category_" + adId).value;
     params += "&category=" + category;
     params += "&user=" + user;
     params += "&content=" + content;
     req.send(params);
+    location.reload(true);
 }
 </script>
 
@@ -57,8 +59,11 @@ function updateAd(adId)
             </td>
             <td><input name="content_<jstl:out value='${ad.id}' />"
                                   value ='<jstl:out value="${ad.content}" />'/></td>
-            <td><input name="category_<jstl:out value='${ad.id}' />"
-                                  value ='<jstl:out value="${ad.category}" />'/></td>
+            <td><select name="category_<jstl:out value='${ad.id}' />"
+                                  value ='<jstl:out value="${ad.category}" />'
+                                  >
+                    <%@include file="categories.jsp"%>
+                </select></td>
             <td>
                 <button onClick="updateAd(<jstl:out value='${ad.id}' />)">
                     Update
@@ -75,13 +80,18 @@ function updateAd(adId)
         <table>
             <thead>
                 <td>user</td>
-                <td>category</td>
                 <td>content</td>
+                <td>category</td>
+                <td>media type</td>
             </thead>
             <tr>
                 <td><input type="text" multiple="true"  name="user" /></td>
                 <td><input type="text" multiple="true"  name="content" /></td>
-                <td><input type="text" name="category" /></td>
+                <td><%-- <input type="text" name="category" /> --%>
+                    <select name="category">
+                        <%@include file="categories.jsp"%>
+                    </select>
+                </td>
                         <td>
                             <select name="content_type">
                                 <option value="html">html</option>
@@ -93,5 +103,11 @@ function updateAd(adId)
             <tr><td><input type="submit" value="Register"/></td></tr>
         </table>
     </form>
+    <% 
+    CategoryBuilder cb = new CategoryBuilder((Category)request.getAttribute("rootCategory"));
+    request.setAttribute("cb", cb);
+%>
+Available categories:
+${cb.result}
 
 </div>

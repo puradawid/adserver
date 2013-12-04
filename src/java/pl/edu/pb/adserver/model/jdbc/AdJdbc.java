@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.LinkedList;
 import pl.edu.pb.adserver.model.Ad;
+import pl.edu.pb.adserver.model.Category;
 
 /**
  * Class with access methods for 
@@ -24,7 +25,7 @@ public class AdJdbc extends Jdbc {
                 rs.getString("content"),
                 Ad.ContentType.parse(rs.getString("contentType")),
                 UserJdbc.getUser(rs.getInt("client")),
-                rs.getString("category")
+                new Category(rs.getString("category"))
             );
             //setting category
             list.add(a);

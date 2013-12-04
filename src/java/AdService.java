@@ -1,3 +1,4 @@
+import java.util.logging.Logger;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,12 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pl.edu.pb.adserver.model.Ad;
 import pl.edu.pb.adserver.model.Ad.ContentType;
+import pl.edu.pb.adserver.model.Category;
 import pl.edu.pb.adserver.model.User;
 import pl.edu.pb.adserver.model.User.UserType;
 import pl.edu.pb.adserver.model.controller.AdJpaController;
+import pl.edu.pb.adserver.model.controller.CategoryJpaController;
 import pl.edu.pb.adserver.model.controller.UserJpaController;
 
 public class AdService extends ParseableServlet {
+    
+    CategoryJpaController cjc;
+    AdJpaController ajc;
+    UserJpaController ujc;
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     {
@@ -21,10 +29,25 @@ public class AdService extends ParseableServlet {
         User logged = (User) request.getSession().getAttribute("user");
         if(logged == null) { response.setStatus(403); return; }
         
+        try
+        {
+            //get categories
+            List<Category> categories;
+            
+            cjc = new CategoryJpaController(
+                    Persistence.createEntityManagerFactory("AdServerPU"));
+            
+            categories = cjc.findCategoryEntities();
+            
+            request.setAttribute("rootCategory", cjc.getRootCategory());
+            request.setAttribute("categories", categories);
+        } catch (Exception e)
+        {}
+        
         List<Ad> ads = new LinkedList<Ad>();
         if(logged.getCredencials().equals(UserType.ADM.toString()))
         {
-            AdJpaController ajc = new AdJpaController(
+            ajc = new AdJpaController(
                     Persistence.createEntityManagerFactory("AdServerPU"));
             try {
                 ads = ajc.findAdEntities();
@@ -34,7 +57,7 @@ public class AdService extends ParseableServlet {
             
         }if (logged.getCredencials().equals(UserType.ADM.toString()))
         {
-           AdJpaController ajc = new AdJpaController(
+           ajc = new AdJpaController(
                     Persistence.createEntityManagerFactory("AdServerPU"));
             try {
                 ads = ajc.getUserAds(logged);
@@ -65,10 +88,13 @@ public class AdService extends ParseableServlet {
                 user = logged.getEmail(); //ad user overload
             String category = params.get("category");
             String contentType = params.get("content_type");
-            UserJpaController ujc = new UserJpaController(
+            ujc = new UserJpaController(
                     Persistence.createEntityManagerFactory("AdServerPU"));
+            cjc = new CategoryJpaController(
+                    Persistence.createEntityManagerFactory("AdServerPU"));
+            Category c = cjc.findCategory(category);
             User u = ujc.findUser(user);
-            Ad ad = new Ad(0, content, ContentType.parse(contentType), u, category);
+            Ad ad = new Ad(0, content, ContentType.parse(contentType), u, c);
             
             AdJpaController ajc = new AdJpaController(
                     Persistence.createEntityManagerFactory("AdServerPU"));
@@ -77,7 +103,7 @@ public class AdService extends ParseableServlet {
                     request.getServletContext().getContextPath() + "/ad");
         } catch (Exception e)
         {
-            
+            Logger.getLogger(getClass().getName()).severe(e.getMessage());
         }
     }
     @Override

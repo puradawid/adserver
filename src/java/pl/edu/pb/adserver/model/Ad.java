@@ -43,8 +43,9 @@ public class Ad implements Serializable {
         }
     };
     
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     /** Category od ad type (without a tree) */
-    protected String category;
+    protected Category category;
     
     /** Is this an picture or plain html? */
     protected ContentType contentType;
@@ -52,7 +53,7 @@ public class Ad implements Serializable {
     public Ad() {} //default but certainly unused constructor
     
     public Ad(int id, String content, ContentType contentType, User user,
-            String category)
+            Category category)
     {
         this.id = id;
         this.content = content;
@@ -96,12 +97,12 @@ public class Ad implements Serializable {
         return this.contentType;
     }
     
-    public String getCategory()
+    public Category getCategory()
     {
         return category;
     }
     
-    public void setCategory(String category)
+    public void setCategory(Category category)
     {
         this.category = category;
     }
