@@ -46,11 +46,11 @@ if(sn.getAttribute("user") != null)
     <form method="POST">
             <div>
                 <div>Login:</div>
-                <div><input name="login" /> </div>
+                <div><input name="login" placeholder="user@example.com" /> </div>
             </div>
             <div>
                 <div>Password:</div>
-                <div><input name="password" type="password" /> </div>
+                <div><input name="password" type="password" placeholder="password1234" /> </div>
             </div>
             <div>
                 <input type='hidden' value='login' name='action' />

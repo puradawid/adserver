@@ -23,10 +23,10 @@ function removeAd(adId)
 function updateAd(adId)
 {
     var req = new XMLHttpRequest();
-    req.open("PUT", "${pageContext.servletContext.contextPath}/ad/id/" + adId);
+    req.open("PUT", "${pageContext.servletContext.contextPath}/ad/id/" + adId, false);
     params = "";
     var content = findByName("input", "content_" + adId).value;
-    var user = findByName("input", "client_" + adId).value;
+    var user = findByName("select", "client_" + adId).value;
     var category = findByName("select", "category_" + adId).value;
     params += "&category=" + category;
     params += "&user=" + user;
@@ -49,26 +49,37 @@ function updateAd(adId)
             <td>
                 <jstl:choose>
                     <jstl:when test="${sessionScope.user.credencials == 'ADM'}">
-                        <input name="client_<jstl:out value='${ad.id}' />"
-                                  value ='<jstl:out value="${ad.user.email}" />'/>
+                        
+                        <select name="client_${ad.id}"
+                                  value ='${ad.user.email}'>
+                            <jstl:forEach items="${users}"  var="user">
+                                <jstl:choose>
+                                    <jstl:when test="${ad.user.email == user.email}">
+                                        <option value="${user.email}" selected="selected">${user.email}</option>
+                                    </jstl:when>
+                                    <jstl:otherwise>
+                                        <option value="${user.email}" >${user.email}</option>
+                                    </jstl:otherwise>
+                                </jstl:choose>
+                            </jstl:forEach>
+                        </select>
                     </jstl:when>
                     <jstl:otherwise>
                         <jstl:out value="${ad.user.email}" />
                     </jstl:otherwise>
                 </jstl:choose>
             </td>
-            <td><input name="content_<jstl:out value='${ad.id}' />"
-                                  value ='<jstl:out value="${ad.content}" />'/></td>
-            <td><select name="category_<jstl:out value='${ad.id}' />"
-                                  value ='<jstl:out value="${ad.category}" />'
-                                  >
+            <td><input name="content_${ad.id}" value = "${ad.content}"/></td>
+            <td>
+                <select name="category_${ad.id}"/>'
+                <jstl:set var="selected" value="${ad.category.name}" scope="request" />            
                     <%@include file="categories.jsp"%>
                 </select></td>
             <td>
-                <button onClick="updateAd(<jstl:out value='${ad.id}' />)">
+                <button onClick="updateAd(${ad.id})">
                     Update
                 </button>
-                <button onClick="removeAd(<jstl:out value='${ad.id}' />)">
+                <button onClick="removeAd(${ad.id})">
                     Remove
                 </button>
             </td>

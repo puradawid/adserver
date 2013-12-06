@@ -4,6 +4,6 @@
                 You are logged in as <jstl:out value = "${sessionScope.user.email}" />
             </jstl:if>
             <jstl:if test="${sessionScope.user == null}">
-                <%@include file="/login.jsp" %>
-                <%@include file="/register.jsp" %>
+                <%@include file="login.jsp" %>
+                <%@include file="register.jsp" %>
             </jstl:if>
