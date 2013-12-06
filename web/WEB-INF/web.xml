@@ -35,7 +35,7 @@
         <jsp-property-group>
             <description>Footer and header for all html documents</description>
             <display-name>Header and footer</display-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/WEB-INF/HTML/*</url-pattern>
             <include-prelude>/WEB-INF/jspf/header.jsp</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jsp</include-coda>
         </jsp-property-group>

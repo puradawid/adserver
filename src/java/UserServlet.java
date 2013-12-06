@@ -29,7 +29,7 @@ public class UserServlet extends ParseableServlet {
         List<User> users = ujc.findUserEntities();
         request.setAttribute("users", users);
         try {
-            request.getRequestDispatcher("users_table.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/HTML/users_table.jsp").forward(request, response);
         } catch (ServletException e) {
             Logger.getLogger("UserServlet.doGet()").severe(e.getMessage());
         } catch (IOException e) {

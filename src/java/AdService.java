@@ -3,7 +3,9 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pl.edu.pb.adserver.model.Ad;
@@ -22,6 +24,46 @@ public class AdService extends ParseableServlet {
     UserJpaController ujc;
     
     @Override
+    public void init(ServletConfig sc)
+    {
+            EntityManagerFactory emf = Persistence
+                    .createEntityManagerFactory("AdServerPU");
+            cjc = new CategoryJpaController(emf);
+            ajc = new AdJpaController(emf);
+            ujc = new UserJpaController(emf);   
+    }
+    
+    protected void putError(HttpServletResponse response, int code)
+    {
+        response.setStatus(code);
+    }
+    
+    protected void handleParnership(HttpServletRequest request, 
+            HttpServletResponse response)
+    {
+        String[] params = parseParams(request);
+        if(params.length == 3 && request.getParameterMap().size() == 0) //if get is without parameteres then run adgenerator
+        {
+            try {
+            request.getRequestDispatcher("/WEB-INF/HTML/ad_generator.jsp")
+                    .forward(request, response);
+            return; // application loaded
+            } catch (Exception e)
+            {putError(response, 501);}
+        } else
+        {
+            try {
+            
+            request.getRequestDispatcher("WEB-INF/XML/ad_link.jsp")
+                    .forward(request, response);
+                
+            return; // application loaded
+            } catch (Exception e)
+            {putError(response, 501);}
+        }
+    }
+            
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     {
         //if there is a client then print list of his ads
@@ -29,47 +71,46 @@ public class AdService extends ParseableServlet {
         User logged = (User) request.getSession().getAttribute("user");
         if(logged == null) { response.setStatus(403); return; }
         
+        if(logged.getCredencials().equals("PAR"))
+        {
+            handleParnership(request, response);
+            return;
+        }
+        
         try
         {
             //get categories
-            List<Category> categories;
+            List<Category> categories = cjc.findCategoryEntities();
+            List<User> users = ujc.findUserEntities();
             
-            cjc = new CategoryJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
-            
-            categories = cjc.findCategoryEntities();
-            
+            request.setAttribute("users", users);
             request.setAttribute("rootCategory", cjc.getRootCategory());
             request.setAttribute("categories", categories);
         } catch (Exception e)
-        {}
+        {putError(response, 501);}
         
         List<Ad> ads = new LinkedList<Ad>();
         if(logged.getCredencials().equals(UserType.ADM.toString()))
         {
-            ajc = new AdJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             try {
                 ads = ajc.findAdEntities();
                 request.setAttribute("ads", ads);
             } catch (Exception e)
-            {}
+            {putError(response, 501);}
             
         }if (logged.getCredencials().equals(UserType.ADM.toString()))
         {
-           ajc = new AdJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             try {
                 ads = ajc.getUserAds(logged);
                 request.setAttribute("ads", ads);
             } catch (Exception e)
-            {}
+            {putError(response, 501);}
         }
         try {
-            request.getRequestDispatcher("/manage_ads.jsp")
+            request.getRequestDispatcher("/WEB-INF/HTML/manage_ads.jsp")
                     .forward(request, response);
         } catch(Exception e)
-        {}
+        {putError(response, 501);}
         //if there is a partner, then print generator for ads
         
     }
@@ -88,16 +129,10 @@ public class AdService extends ParseableServlet {
                 user = logged.getEmail(); //ad user overload
             String category = params.get("category");
             String contentType = params.get("content_type");
-            ujc = new UserJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
-            cjc = new CategoryJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             Category c = cjc.findCategory(category);
             User u = ujc.findUser(user);
             Ad ad = new Ad(0, content, ContentType.parse(contentType), u, c);
             
-            AdJpaController ajc = new AdJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             ajc.create(ad);
             response.sendRedirect(
                     request.getServletContext().getContextPath() + "/ad");
@@ -122,12 +157,14 @@ public class AdService extends ParseableServlet {
         
         try
         {
-            AdJpaController ajc = new AdJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             Ad a = ajc.findAd(Integer.parseInt(params[3]));
             
             String content = parameters.get("content");
+            User u = ujc.findUser(parameters.get("user"));
+            Category category = cjc.findCategory(parameters.get("category"));
+            if(u != null) a.setUser(u);
             if(content != null) a.setContent(content);
+            if(category != null) a.setCategory(category);
             
             ajc.edit(a);
         } catch (Exception e)
@@ -150,8 +187,6 @@ public class AdService extends ParseableServlet {
         }
         try
         {
-            AdJpaController ajc = new AdJpaController(
-                    Persistence.createEntityManagerFactory("AdServerPU"));
             ajc.destroy(Integer.parseInt(params[3]));
         } catch (Exception e)
         {response.setStatus(501); return;}

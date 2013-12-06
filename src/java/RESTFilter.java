@@ -45,7 +45,7 @@ public class RESTFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse)response;
         
         if(elements.length < 2)
-            req.getRequestDispatcher("/index.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/HTML/index.jsp").forward(req, res);
         
         if(elements.length >= 2 && mapping.containsKey(elements[1]))
         {
