@@ -50,6 +50,8 @@ public class Ad implements Serializable {
     /** Is this an picture or plain html? */
     protected ContentType contentType;
     
+    protected String orientation;
+    
     public Ad() {} //default but certainly unused constructor
     
     public Ad(int id, String content, ContentType contentType, User user,
@@ -106,4 +108,14 @@ public class Ad implements Serializable {
     {
         this.category = category;
     }
+
+    public String getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(String orientation) {
+        this.orientation = orientation;
+    }
+    
+    
 }
