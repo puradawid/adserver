@@ -10,6 +10,7 @@ function findByName(tag, name)
     for(var i = 0; i < list.length; i++)
         if(list.item(i).attributes.getNamedItem("name").value == name)
             return list.item(i);
+    return null;
 }
 
 function removeAd(adId)
@@ -26,11 +27,14 @@ function updateAd(adId)
     req.open("PUT", "${pageContext.servletContext.contextPath}/ad/id/" + adId, false);
     params = "";
     var content = findByName("input", "content_" + adId).value;
-    var user = findByName("select", "client_" + adId).value;
+    var user = findByName("select", "client_" + adId);
+    if(user !== null) user = user.value;
     var category = findByName("select", "category_" + adId).value;
+    var orientation = findByName("select", "orientation_"  + adId).value;
     params += "&category=" + category;
     params += "&user=" + user;
     params += "&content=" + content;
+    params += "&orientation=" + orientation;
     req.send(params);
     location.reload(true);
 }
@@ -42,6 +46,7 @@ function updateAd(adId)
             <td>user</td>
             <td>content</td>
             <td>category</td>
+            <td>orientation</td>
             <td>actions</td>
         </thead>
         <jstl:forEach items="${ads}" var="ad">
@@ -74,7 +79,14 @@ function updateAd(adId)
                 <select name="category_${ad.id}"/>'
                 <jstl:set var="selected" value="${ad.category.name}" scope="request" />            
                     <%@include file="categories.jsp"%>
-                </select></td>
+                </select>
+            </td>
+            <td>
+                <select name="orientation_${ad.id}"/>'          
+                    <option>horizontal</option>
+                    <option>vertical</option>
+                </select>
+            </td>
             <td>
                 <button onClick="updateAd(${ad.id})">
                     Update

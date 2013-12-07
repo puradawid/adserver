@@ -43,16 +43,17 @@
 
 <div id="screen_2" hidden> 
     Please select your category to ad
+    <br/>
     <select name="category" onChange="setCategory(this)" onLoad="setCategory(this)">
-        <option>root</option>
-        <option>another</option>
+        <%@include file="/WEB-INF/HTML/categories.jsp" %>
     </select>
+    <br />
     <button onClick="nextPage(this);getAd()">Next</button>
 </div>
 
 <div id="screen_3" hidden>
     Ok, please paste this link from here:
     <div>
-    <textarea rows="50" cols="200" id="quote"></textarea>
+    <textarea rows="50" cols="60" id="quote"></textarea>
     </div>
 </div>

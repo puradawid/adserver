@@ -227,7 +227,7 @@ public class CategoryJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             Query q = em.createQuery
-                    ("SELECT c FROM Category c WHERE c.name = 'root'");
+                    ("SELECT c FROM Category c WHERE c.name = 'all'");
             return (Category)q.getSingleResult();
         } finally {
             em.close();

@@ -43,6 +43,20 @@ public class Ad implements Serializable {
         }
     };
     
+    public enum Orientation
+    {
+      horizontal,
+      vertical;
+      
+      public static Orientation parse(String orientation)
+      {
+          if(orientation.equals("horizontal")) return horizontal;
+          if(orientation.equals("vertical")) return vertical;
+          return null;
+      }
+      
+    };
+    
     @ManyToOne(cascade = {CascadeType.REFRESH})
     /** Category od ad type (without a tree) */
     protected Category category;
@@ -50,7 +64,7 @@ public class Ad implements Serializable {
     /** Is this an picture or plain html? */
     protected ContentType contentType;
     
-    protected String orientation;
+    protected Orientation orientation;
     
     public Ad() {} //default but certainly unused constructor
     
@@ -62,6 +76,7 @@ public class Ad implements Serializable {
         this.contentType = contentType;
         this.category = category;
         this.user = user;
+        this.orientation = Orientation.vertical;
     }
     
     
@@ -109,11 +124,11 @@ public class Ad implements Serializable {
         this.category = category;
     }
 
-    public String getOrientation() {
+    public Orientation getOrientation() {
         return orientation;
     }
 
-    public void setOrientation(String orientation) {
+    public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
     

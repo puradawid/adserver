@@ -29,9 +29,9 @@ public class RESTFilter implements Filter {
         
         //hardcoded for now
         mapping.put("user", "/userservlet");
-        mapping.put("login", "/login.jsp");
-        mapping.put("logout", "/logout.jsp");
-        mapping.put("register", "/register.jsp");
+        mapping.put("login", "/WEB-INF/HTML/login.jsp");
+        mapping.put("logout", "/WEB-INF/HTML/logout.jsp");
+        mapping.put("register", "/WEB-INF/HTML/register.jsp");
         mapping.put("ad", "/adservice");
         
     }
@@ -45,7 +45,10 @@ public class RESTFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse)response;
         
         if(elements.length < 2)
+        {
             req.getRequestDispatcher("/WEB-INF/HTML/index.jsp").forward(req, res);
+            return;
+        }
         
         if(elements.length >= 2 && mapping.containsKey(elements[1]))
         {

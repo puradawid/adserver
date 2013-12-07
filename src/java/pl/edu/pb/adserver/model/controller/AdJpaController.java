@@ -16,6 +16,9 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pl.edu.pb.adserver.model.Ad;
+import pl.edu.pb.adserver.model.Ad.ContentType;
+import pl.edu.pb.adserver.model.Ad.Orientation;
+import pl.edu.pb.adserver.model.Category;
 import pl.edu.pb.adserver.model.User;
 import pl.edu.pb.adserver.model.controller.exceptions.NonexistentEntityException;
 import pl.edu.pb.adserver.model.controller.exceptions.PreexistingEntityException;
@@ -130,6 +133,27 @@ public class AdJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Ad> findAds(Category c, ContentType t, Orientation o)
+    {
+        List<Ad> result = new LinkedList<Ad>();
+        EntityManager em = getEntityManager();
+        
+        try
+        {
+            Query q = em.createQuery("SELECT a FROM Ad a WHERE a.category = :c "
+                    + "AND a.contentType = :t AND a.orientation = :o");
+            q.setParameter("c", c);
+            q.setParameter("t", t);
+            q.setParameter("o", o);
+            
+            result = q.getResultList();
+        } finally
+        {
+            em.close();
+        }
+        return result;
+    }
 
     public int getAdCount() {
         EntityManager em = getEntityManager();
@@ -152,8 +176,9 @@ public class AdJpaController implements Serializable {
         
         EntityManager em = getEntityManager();
         Query q = em.createQuery(
-                "SELECT a FROM ad a WHERE a.user.id = "
-                        + u.getId());
+                "SELECT a FROM Ad a WHERE a.user = :user");
+        q.setParameter("user", u);
+        
         return q.getResultList();
     }
     
