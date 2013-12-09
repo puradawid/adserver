@@ -16,26 +16,20 @@
         boolean done = (new UserActions()).register(n);
         request.setAttribute("done", done);
     %>
-    <%-- 
-    <jstl:catch var="sqlexception" >
-    <sql:update dataSource="jdbc/adserver_database" var="result">
-        INSERT INTO users (first_name, email, password, telephone, second_name)
-        VALUES (
-            '<jstl:out value="${param.name}"/>',
-            '<jstl:out value="${param.email}"/>',
-            MD5('<jstl:out value="${param.password}"/>'),
-            '<jstl:out value="${param.telephone}"/>',
-            '<jstl:out value="${param.second_name}"/>'
-            );
-    </sql:update>
-    </jstl:catch>
-    <jstl:if test="${sqlexception != null}">
-        User already registerd or there is a bug with form
-    </jstl:if>
-    <jstl:redirect url="/" />
-    --%>
 </jstl:if>
-
+<script>
+    var passwd1;
+    var passwd2;
+    function registerPassword1(passwd)
+    {
+        passwd1 = passwd;
+    }
+    function checkPasswords(passwd)
+    {
+        if (passwd.value != passwd1.value)
+            alert("hasla nie sa zgodne!");
+    }
+</script>
         <h1>Register</h1>
         <jstl:if test="${sessionScope.user == null}">
         <form method="POST">
@@ -49,10 +43,10 @@
                 <div>Surname:</div><div><input name="surname" /></div>
             </div>
             <div>
-                <div>Password:</div><div><input name="password" /></div>
+                <div>Password:</div><div><input name="password" type="password" onChange="registerPassword1(this)" /></div>
             </div>
             <div>
-                <div>Retype password:</div><div><input name="retyped_password" /></div>
+                <div>Retype password:</div><div><input name="retyped_password" type="password" onChange="checkPasswords(this)" /></div>
             </div>
             <div>
                 <div>Telephone:</div><div><input name="telephone" /></div>
