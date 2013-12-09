@@ -1,4 +1,3 @@
-
 import java.util.logging.Logger;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -45,7 +44,7 @@ public class AdService extends ParseableServlet {
             HttpServletResponse response) {
         String[] params = parseParams(request);
         loadCategories(request, response);
-        if (params.length == 3 && request.getParameterMap().size() == 0) //if get is without parameteres then run adgenerator
+        if (params.length == 3 && request.getParameterMap().isEmpty()) //if get is without parameteres then run adgenerator
         {
             try {
                 request.getRequestDispatcher("/WEB-INF/HTML/ad_generator.jsp")
