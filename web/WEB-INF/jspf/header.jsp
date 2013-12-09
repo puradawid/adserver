@@ -4,9 +4,9 @@
     //cookie handling
     Cookie[] cookies = request.getCookies();
     Cookie layout = null;
-    boolean isExist = false;
-    for(Cookie cookie : cookies)
-        if(cookie.getName().equals("layout")) layout = cookie;
+    if(cookies != null)
+        for(Cookie cookie : cookies)
+            if(cookie.getName().equals("layout")) layout = cookie;
     if (layout == null)
     {
         layout = new Cookie("layout", "default");
@@ -21,13 +21,15 @@
             layout.setValue("default");
         response.addCookie(layout);
     }
+    
+    request.setAttribute("layout", layout);
         
 %>
 
 <html>
     <header>
         <title>AdServer Web Pages ${cookie.dupa}</title>
-        <link rel="stylesheet" type="text/css" href="<jstl:out value="${pageContext.request.servletContext.contextPath}" />/style/${cookie.layout.value}.css" />
+        <link rel="stylesheet" type="text/css" href="<jstl:out value="${pageContext.request.servletContext.contextPath}" />/style/${layout.value}.css" />
     </header>
     
     <body>
