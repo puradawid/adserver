@@ -3,7 +3,7 @@
 /* DOCUMENT STYLE */
 body
 {
-    background-color: #DDDDDD;
+    background-color: #000000;
 }
 
 .container
@@ -14,22 +14,22 @@ body
 
 .header
 {
-    background-color: #DDDDDD;
+    background-color: #EEEEEE;
     height: 50px;
     
     /* Text properties */
     color: #999999;
     font-size: 25px;
     font-family: monospace;
-    padding-left: 100px;
-    padding-top:10px;
+    padding-left: 400px;
+    padding-top:30px;
 }
 
 .menu_element
 {
     float:left;
     display:block;
-    background-color: #CCCCCC;
+    background-color: #FFFFFF;
     margin-left:15px;
 }
 .menu_element > a
@@ -53,12 +53,12 @@ body
 /* FORM SETTINGS */
 form
 {
-   border: 1px solid black; 
+   border: 1px solid white; 
 }
 h1
 {
     margin-bottom:-5px;
-    color:#AAAAAA;
+    color:#CCCCCC;
     font-size: 18px;
 }
 form > div > div
