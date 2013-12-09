@@ -104,13 +104,17 @@ public class AdService extends ParseableServlet {
         
         
         try {
+            randomed.setViews(randomed.getViews() + 1);
+            ajc.edit(randomed);
             request.setAttribute("ad", randomed); //pass advertisement to JSP
             request.getRequestDispatcher("WEB-INF/XML/generate_ad.jsp")
                     .forward(request, response);
         } catch (ServletException e) {
 
         } catch (IOException e) {
-
+            
+        } catch(Exception e) {
+            
         } finally {
 
         }
@@ -139,6 +143,19 @@ public class AdService extends ParseableServlet {
             response.setStatus(403);
             return;
         }
+        if(request.getParameter("action") != null
+                && request.getParameter("action").equals("redirect"))
+        {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Ad a = ajc.findAd(id);
+            try {
+            a.setClicks(a.getClicks() + 1);
+            ajc.edit(a);
+            response.sendRedirect(a.getReferer());
+            return;
+            } catch (Exception e) {}
+        }
+        
         if (request.getParameter("action") != null &&
                 request.getParameter("action").equals("getAd")) {
             handleQuery(request, response);
@@ -147,13 +164,14 @@ public class AdService extends ParseableServlet {
 
         loadCategories(request, response);
 
-        if (logged.getCredencials().equals("PAR")) {
+        if (logged != null && logged.getCredencials().equals("PAR")) {
             handleParnership(request, response);
             return;
         }
 
         List<Ad> ads = new LinkedList<Ad>();
-        if (logged.getCredencials().equals(UserType.ADM.toString())) {
+        if (logged != null && 
+                logged.getCredencials().equals(UserType.ADM.toString())) {
             try {
                 ads = ajc.findAdEntities();
                 request.setAttribute("ads", ads);
@@ -162,7 +180,8 @@ public class AdService extends ParseableServlet {
             }
 
         }
-        if (logged.getCredencials().equals(UserType.CLI.toString())) {
+        if (logged != null && 
+                logged.getCredencials().equals(UserType.CLI.toString())) {
             try {
                 ads = ajc.getUserAds(logged);
                 request.setAttribute("ads", ads);
@@ -187,6 +206,7 @@ public class AdService extends ParseableServlet {
             User logged = (User) request.getSession().getAttribute("user");
             Map<String, String> params = buildParamMap(request);
             String content = params.get("content");
+            String referer = params.get("referer");
             String user = params.get("user");
             if (logged.getCredencials().equals(UserType.CLI.toString())) {
                 user = logged.getEmail(); //ad user overload
@@ -195,7 +215,7 @@ public class AdService extends ParseableServlet {
             String contentType = params.get("content_type");
             Category c = cjc.findCategory(category);
             User u = ujc.findUser(user);
-            Ad ad = new Ad(0, content, ContentType.parse(contentType), u, c);
+            Ad ad = new Ad(0, content, referer, ContentType.parse(contentType), u, c);
 
             ajc.create(ad);
             response.sendRedirect(
@@ -226,23 +246,24 @@ public class AdService extends ParseableServlet {
             String content = parameters.get("content");
             User u = ujc.findUser(parameters.get("user"));
             Category category = cjc.findCategory(parameters.get("category"));
+            String referer = parameters.get("referer");
+            ContentType media = Ad.ContentType.parse(parameters.get("media"));
             Ad.Orientation orientation = Ad.Orientation.parse(
                 parameters.get("orientation"));
-            if (u != null) {
-                a.setUser(u);
-            }
-            if (content != null) {
-                a.setContent(content);
-            }
-            if (category != null) {
-                a.setCategory(category);
-            }
             
+            if (u != null) 
+                a.setUser(u);
+            if (content != null)
+                a.setContent(content);
+            if (category != null)
+                a.setCategory(category);            
             if(orientation != null)
-            {
                 a.setOrientation(orientation);
-            }
-
+            if(referer != null)
+                a.setReferer(referer);
+            if(media != null)
+                a.setContentType(media);
+            
             ajc.edit(a);
         } catch (Exception e) {
             response.setStatus(403);

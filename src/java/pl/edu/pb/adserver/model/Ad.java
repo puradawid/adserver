@@ -30,6 +30,13 @@ public class Ad implements Serializable {
     /** Client id which add ad */
     protected User user;
     
+    /** Link which ad is refering to **/
+    protected String referer;
+    
+    protected int clicks = 0;
+    
+    protected int views = 0;
+    
     /** Content */
     public enum ContentType
     {
@@ -68,7 +75,7 @@ public class Ad implements Serializable {
     
     public Ad() {} //default but certainly unused constructor
     
-    public Ad(int id, String content, ContentType contentType, User user,
+    public Ad(int id, String content, String referer, ContentType contentType, User user,
             Category category)
     {
         this.id = id;
@@ -130,6 +137,30 @@ public class Ad implements Serializable {
 
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
+    }
+
+    public String getReferer() {
+        return referer;
+    }
+
+    public void setReferer(String referer) {
+        this.referer = referer;
+    }
+
+    public int getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
     
     

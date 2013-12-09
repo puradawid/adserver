@@ -77,9 +77,9 @@ public class putData {
        
        //create ADSSS
        
-       Ad computer = new Ad(0, "Buy some computers man", Ad.ContentType.html, cli, all);
-       Ad shirt = new Ad(0, "Free shirts only in here", Ad.ContentType.html, cli, all);
-       Ad transit = new Ad(0, "Out trucks go anywhere you want!", Ad.ContentType.html, cli, all);
+       Ad computer = new Ad(0, "Buy some computers man", "http://google.com", Ad.ContentType.html, cli, all);
+       Ad shirt = new Ad(0, "Free shirts only in here", "http://google.com", Ad.ContentType.html, cli, all);
+       Ad transit = new Ad(0, "Out trucks go anywhere you want!", "http://google.com", Ad.ContentType.html, cli, all);
        
        try
        {

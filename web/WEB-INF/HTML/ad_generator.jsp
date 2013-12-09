@@ -2,6 +2,8 @@
     var page_number = 1;
     
     var form_category = 'all';
+    var form_orientation = 'horizontal';
+    var form_media_type = 'html';
     
     function nextPage(sender)
     {
@@ -18,12 +20,24 @@
         form_category = category.options[category.selectedIndex].value;
     }
     
+    function setOrientation(orientation)
+    {
+        form_orientation = orientation.options[orientation.selectedIndex].value;
+    }
+    
+    function setMediaType(media_type)
+    {
+        form_media_type = media_type.options[media_type.selectedIndex].value;
+    }
+    
     
     function getAd()
     {
         var request = new XMLHttpRequest();
         
         var querystring = "category="+form_category;
+        querystring += "&orientation=" +form_orientation;
+        querystring += "&media="+form_media_type;
         
         request.open("GET", "ad?"+querystring, false);
         
@@ -48,10 +62,33 @@
         <%@include file="/WEB-INF/HTML/categories.jsp" %>
     </select>
     <br />
+    <button onClick="nextPage(this)">Next</button>
+</div>
+    
+
+<div id="screen_3" hidden> 
+    Please select your ad orientation
+    <br/>
+    <select name="orientation" onChange="setOrientation(this)" onLoad="setOrientation(this)">
+        <option>horizontal</option>
+        <option>vertical</option>
+    </select>
+    <br />
+    <button onClick="nextPage(this)">Next</button>
+</div>
+    
+<div id="screen_4" hidden> 
+    Please select your media type
+    <br/>
+    <select name="media_type" onChange="setMediaType(this)" onLoad="setMediaType(this)">
+        <option>html</option>
+        <option>image</option>
+    </select>
+    <br />
     <button onClick="nextPage(this);getAd()">Next</button>
 </div>
 
-<div id="screen_3" hidden>
+<div id="screen_5" hidden>
     Ok, please paste this link from here:
     <div>
     <textarea rows="50" cols="60" id="quote"></textarea>

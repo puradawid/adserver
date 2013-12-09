@@ -1,9 +1,33 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    //cookie handling
+    Cookie[] cookies = request.getCookies();
+    Cookie layout = null;
+    boolean isExist = false;
+    for(Cookie cookie : cookies)
+        if(cookie.getName().equals("layout")) layout = cookie;
+    if (layout == null)
+    {
+        layout = new Cookie("layout", "default");
+        response.addCookie(layout);  
+    }
+    String changeLayout = request.getParameter("changeLayout");
+    if(changeLayout != null)
+    {
+        if(layout.getValue().equals("default"))
+            layout.setValue("other");
+        else
+            layout.setValue("default");
+        response.addCookie(layout);
+    }
+        
+%>
+
 <html>
     <header>
-        <title>AdServer Web Pages</title>
-        <link rel="stylesheet" type="text/css" href="<jstl:out value="${pageContext.request.servletContext.contextPath}" />/style/default.css" />
+        <title>AdServer Web Pages ${cookie.dupa}</title>
+        <link rel="stylesheet" type="text/css" href="<jstl:out value="${pageContext.request.servletContext.contextPath}" />/style/${cookie.layout.value}.css" />
     </header>
     
     <body>
@@ -47,5 +71,8 @@
                         Hello <jstl:out value="${sessionScope.user.first_name}" />!
                     </div>
                 </jstl:if>
+                <div class="menu_element">
+                    <a href="?changeLayout">Switch layout</a>
+                </div>
             </div>
             <div class="content">

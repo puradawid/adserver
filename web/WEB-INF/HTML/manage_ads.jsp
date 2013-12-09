@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"
-        import="pl.edu.pb.adserver.model.*, pl.edu.pb.adserver.model.jdbc.*"%>
+        import="pl.edu.pb.adserver.model.*"%>
 <%@page import="java.util.List" %>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -31,10 +31,14 @@ function updateAd(adId)
     if(user !== null) user = user.value;
     var category = findByName("select", "category_" + adId).value;
     var orientation = findByName("select", "orientation_"  + adId).value;
+    var referer = findByName("input", "referer_"  + adId).value;
+    var media = findByName("select", "media_"  + adId).value;
     params += "&category=" + category;
     params += "&user=" + user;
     params += "&content=" + content;
     params += "&orientation=" + orientation;
+    params += "&referer=" + referer;
+    params += "&media=" + media;
     req.send(params);
     location.reload(true);
 }
@@ -44,9 +48,13 @@ function updateAd(adId)
     <table>
         <thead>
             <td>user</td>
+            <td>referer</td>
             <td>content</td>
             <td>category</td>
             <td>orientation</td>
+            <td>media</td>
+            <td>views</td>
+            <td>clicks</td>
             <td>actions</td>
         </thead>
         <jstl:forEach items="${ads}" var="ad">
@@ -74,6 +82,7 @@ function updateAd(adId)
                     </jstl:otherwise>
                 </jstl:choose>
             </td>
+             <td><input name="referer_${ad.id}" value = "${ad.referer}"/></td>
             <td><input name="content_${ad.id}" value = "${ad.content}"/></td>
             <td>
                 <select name="category_${ad.id}"/>'
@@ -83,10 +92,18 @@ function updateAd(adId)
             </td>
             <td>
                 <select name="orientation_${ad.id}"/>'          
-                    <option>horizontal</option>
-                    <option>vertical</option>
+                    <option <jstl:if test="${ad.orientation == 'horizontal'}" >selected="selected"</jstl:if>>horizontal</option>
+                    <option <jstl:if test="${ad.orientation == 'vertical'}" >selected="selected"</jstl:if>>vertical</option>
                 </select>
             </td>
+            <td>
+                <select name="media_${ad.id}"/>'          
+                    <option <jstl:if test="${ad.contentType == 'html'}" >selected="selected"</jstl:if>>html</option>
+                    <option <jstl:if test="${ad.contentType == 'picture'}" >selected="selected"</jstl:if>>picture</option>
+                </select>
+            </td>
+            <td>${ad.views}</td>
+            <td>${ad.clicks}</td>
             <td>
                 <button onClick="updateAd(${ad.id})">
                     Update
@@ -103,14 +120,16 @@ function updateAd(adId)
         <table>
             <thead>
                 <td>user</td>
+                <td>referer</td>
                 <td>content</td>
                 <td>category</td>
                 <td>media type</td>
             </thead>
             <tr>
                 <td><input type="text" multiple="true"  name="user" /></td>
+                <td><input type="text" multiple="true"  name="referer" /></td>
                 <td><input type="text" multiple="true"  name="content" /></td>
-                <td><%-- <input type="text" name="category" /> --%>
+                <td>
                     <select name="category">
                         <%@include file="categories.jsp"%>
                     </select>
