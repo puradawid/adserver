@@ -36,9 +36,23 @@ class ListStrategy implements BuildStrategy
     @Override
     public void after(Category current, CategoryBuilder context) {
         context.objectory_output = category;
+    } 
+}
+
+class EditorStrategy extends OptionStrategy
+{
+    @Override
+    public void before(Category current, CategoryBuilder context)
+    {
+        context.output += "<li>" + current.getName() + "<input name='name' base='" 
+                + current.getName() + "' onChange='addCategory(this)'/><ul>";
     }
     
-    
+    @Override
+    public void after(Category current, CategoryBuilder context)
+    {
+        context.output += "</ul></li>";
+    }
 }
 
 interface BuildStrategy
@@ -63,6 +77,12 @@ public class CategoryBuilder {
     {
         this.root = root;
         this.bs = new ListStrategy();
+    }
+    
+    public CategoryBuilder(Category root, int otherBuild)
+    {
+        this.root = root;
+        this.bs = new EditorStrategy();
     }
     
     public void doWork(Category current)

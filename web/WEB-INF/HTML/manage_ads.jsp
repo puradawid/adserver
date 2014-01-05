@@ -42,6 +42,20 @@ function updateAd(adId)
     req.send(params);
     location.reload(true);
 }
+
+function addCategory(input)
+{
+    var base = input.getAttribute("base");
+    var name = input.value;
+    input.value = "";
+    
+    var req = new XMLHttpRequest();
+    req.open("POST", "${pageContext.servletContext.contextPath}/category", false);
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    req.send("&base="+base+"&name="+name);
+    
+    location.reload();
+}
 </script>
 
 <div class="manager">
@@ -146,9 +160,13 @@ function updateAd(adId)
         </table>
     </form>
     <% 
-    CategoryBuilder cb = new CategoryBuilder((Category)request.getAttribute("rootCategory"));
+    CategoryBuilder cb = null;
+    if(!((User)(request.getSession().getAttribute("user"))).getCredencials().equals("ADM"))
+        cb = new CategoryBuilder((Category)request.getAttribute("rootCategory"));
+    else
+        cb = new CategoryBuilder((Category)request.getAttribute("rootCategory"), 1);
     request.setAttribute("cb", cb);
-%>
+    %>
 Available categories:
 ${cb.result}
 

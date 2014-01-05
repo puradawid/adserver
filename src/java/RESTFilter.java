@@ -33,6 +33,7 @@ public class RESTFilter implements Filter {
         mapping.put("logout", "/WEB-INF/HTML/logout.jsp");
         mapping.put("register", "/WEB-INF/HTML/register.jsp");
         mapping.put("ad", "/adservice");
+        mapping.put("category", "/WEB-INF/HTML/category_manager.jsp");
         
     }
 
