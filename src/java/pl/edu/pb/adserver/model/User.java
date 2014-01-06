@@ -26,7 +26,7 @@ public class User implements Serializable {
     protected String email;
     protected String telephone;
     protected String password; //it might be not used
-    protected UserType type;
+    protected UserType type = UserType.PAR;
     
     
     public User (int id, String email, String password, UserType type, String first_name,

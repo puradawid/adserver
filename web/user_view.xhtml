@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <c:if test="${(authBean.logged != null) and (authBean.logged.credencials == 'ADM')}">
+            <h:form>
+                Email: <h:outputText value="#{userBean.current.email}" /> <br />
+                Name: <h:outputText value="#{userBean.current.first_name}" /> 
+                <h:outputText value="#{userBean.current.second_name}" /> <br />
+                Telephone: <h:outputText value="#{userBean.current.telephone}" /> <br />
+                <h:commandButton action="user_list" value="Return" />
+            </h:form>
+            </c:if>
+        </ui:define>
+    </ui:composition>
+</html>

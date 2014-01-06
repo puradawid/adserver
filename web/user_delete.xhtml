@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <h:form>
+                Id: <h:outputText value="#{userBean.current.id}" /> <br />
+                Email: <h:outputText value="#{userBean.current.email}" /> <br />
+                Name: <h:outputText value="#{userBean.current.first_name}" /> 
+                <h:outputText value="#{userBean.current.second_name}" /> <br />
+                Telephone: <h:outputText value="#{userBean.current.telephone}" /> <br />
+                <h:commandButton action="#{userBean.delete()}" value="Delete" />
+                <h:commandButton action="user_list" value="Cancel" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

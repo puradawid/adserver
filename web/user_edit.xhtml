@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <h:form>
+                Email: <h:inputText value="#{userBean.current.email}" /> <br />
+                Password: <h:inputText value="#{userBean.current.password}" /> <br />
+                Name: <h:inputText value="#{userBean.current.first_name}" /> 
+                <h:inputText value="#{userBean.current.second_name}" /> <br />
+                <h:selectOneMenu value="#{userBean.current.credencials}">
+                    <f:selectItem itemValue="ADM" itemLabel="Administrator" />
+                    <f:selectItem itemValue="CLI" itemLabel="Client" />
+                    <f:selectItem itemValue="PAR" itemLabel="Partner" />
+                </h:selectOneMenu> <br />
+                Telephone: <h:inputText value="#{userBean.current.telephone}" /> <br />
+                <h:commandButton action="#{userBean.update()}" value="Update" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
