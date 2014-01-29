@@ -28,6 +28,12 @@
                                 <h:commandButton action="user_list" value="Users" /> <br />
                                 <h:commandButton action="ad_list" value="Ads" /> <br /> 
                             </c:if>
+                            <c:if test="${authBean.logged.credencials == 'PAR'}">
+                                <h:commandButton action="ad_generator" value="Get Ad" /> <br />
+                            </c:if>
+                            <c:if test="${authBean.logged.credencials == 'CLI'}">
+                                <h:commandButton action="ad_list" value="My Ads" /> <br /> 
+                            </c:if>
                             <h:commandButton action="#{authBean.logout()}" value="Logout" />
                             <br />
                         </h:form>

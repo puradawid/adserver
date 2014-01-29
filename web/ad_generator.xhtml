@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <h:outputScript library="js" name="ad_generator.js" />
+            <div id="screen_1">
+                Hello and welcome to our editor. You will be introduced to create own ad link. Please follow requests.
+                <button onClick="nextPage(this);">Next</button>
+            </div>
+
+            <div id="screen_2" hidden="true"> 
+                Please select your category to ad
+                <br/>
+                <select name="category" onChange="setCategory(this)" onLoad="setCategory(this)">
+                    <option>all</option>
+                </select>
+                <br />
+                <button onClick="nextPage(this)">Next</button>
+            </div>
+
+
+            <div id="screen_3" hidden="true"> 
+                Please select your ad orientation
+                <br/>
+                <select name="orientation" onChange="setOrientation(this)" onLoad="setOrientation(this)">
+                    <option>horizontal</option>
+                    <option>vertical</option>
+                </select>
+                <br />
+                <button onClick="nextPage(this)">Next</button>
+            </div>
+
+            <div id="screen_4" hidden="true"> 
+                Please select your media type
+                <br/>
+                <select name="media_type" onChange="setMediaType(this)" onLoad="setMediaType(this)">
+                    <option>html</option>
+                    <option>image</option>
+                </select>
+                <br />
+                <button onClick="nextPage(this);
+                        getAd()">Next</button>
+            </div>
+
+            <div id="screen_5" hidden="true">
+                Ok, please paste this link from here:
+                <div>
+                    <textarea rows="50" cols="60" id="quote"></textarea>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

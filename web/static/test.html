@@ -12,15 +12,12 @@ and open the template in the editor.
     </head>
     <body>
         <div>TODO write content</div>
-
-
-
 <script>
     function adGet(sender)
     {
         var req = new XMLHttpRequest();
         var category = sender.getAttribute("category");
-        req.open("GET", "http://localhost:8084/AdServer/ad?action=getAd&category="+category+"&orientation=vertical&media=html");
+        req.open("GET", "http://localhost:8080/AdServer/ad?action=getAd&category="+category+"&orientation=horizontal&media=html");
         req.onreadystatechange = function(status) {
             if(this.readyState == 4)
                 sender.innerHTML = req.responseText;
@@ -31,7 +28,7 @@ and open the template in the editor.
     function gotoAd(sender)
     {
         var id = document.getElementById("ad_id").getAttribute("identification");
-        window.open("http://localhost:8084/AdServer/ad?action=redirect&id="+id);
+        window.open("http://localhost:8080/AdServer/ad?action=redirect&id="+id);
     }
 </script>
 

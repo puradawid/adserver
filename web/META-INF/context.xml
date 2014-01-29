@@ -1,9 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Context path="/AdServer">
-    
-    <!-- Debug resource -->
-    <Resource name="jdbc/adserver_database" auth="Container"
-              type="javax.sql.DataSource" driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost/test"
-              username="root" password="root" maxActive="20" maxIdle="10"
-              maxWait="-1"/>
+  <!-- Debug resource -->
+  <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/adserver_database" password="root" type="javax.sql.DataSource" url="jdbc:mysql://localhost/test" username="root"/>
 </Context>

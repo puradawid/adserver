@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <c:if test="${(authBean.logged != null) and (authBean.logged.credencials == 'ADM' or authBean.logged.credencials == 'CLI')}">
+                <h:form>
+                    <h:dataTable value="#{adBean.dataModel}" var="item">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>ID</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Email</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.content}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>First name</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.user.first_name}"/>
+                            <h:outputText value="#{item.user.second_name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Second name</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.referer}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Telephone</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.category.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Category</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.category.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Views</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.views}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Clicks</h:outputText>
+                            </f:facet>
+                            <h:outputText value="#{item.clicks}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText>Actions</h:outputText>
+                            </f:facet>
+                            <h:commandButton action="#{adBean.prepareView()}" value="view" />
+                            <h:commandButton action="#{adBean.prepareEdit()}" value="edit" />
+                            <h:commandButton action="#{adBean.prepareDelete()}" value="delete" />
+                        </h:column>
+                    </h:dataTable>
+                    <h:commandButton action="#{adBean.prepareCreate()}" value="Create" />
+                    <h:commandButton action="#{adBean.recreateModel()}" value="Recreate" />
+                </h:form>
+            </c:if>
+        </ui:define>
+    </ui:composition>
+</html>
