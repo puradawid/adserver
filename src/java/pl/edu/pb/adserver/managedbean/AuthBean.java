@@ -3,6 +3,7 @@ package pl.edu.pb.adserver.managedbean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.Persistence;
 import pl.edu.pb.adserver.model.User;
 import pl.edu.pb.adserver.model.controller.UserJpaController;
@@ -33,6 +34,8 @@ public class AuthBean {
        if( u != null && u.getPassword().equals(password))
        {
            user = u;
+           FacesContext.getCurrentInstance()
+                   .getExternalContext().getSessionMap().put("user", u);
            return "main";
        } else
        {
@@ -69,6 +72,7 @@ public class AuthBean {
     public String logout()
     {
         user = null;
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "main";
     }
 }

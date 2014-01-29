@@ -2,7 +2,6 @@ package pl.edu.pb.adserver.managedbean;
 
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -86,7 +85,7 @@ public class UserBean {
         ujc.destroy(current.getId());
         } catch (Exception e)
         {
-            
+            Logger.getLogger(getClass().getName()).severe(e.getMessage());
         }
         return "user_list";
     }

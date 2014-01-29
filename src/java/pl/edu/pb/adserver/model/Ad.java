@@ -28,7 +28,7 @@ public class Ad implements Serializable {
     @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "user")
     /** Client id which add ad */
-    protected User user;
+    protected User user = new User();
     
     /** Link which ad is refering to **/
     protected String referer;
@@ -66,7 +66,7 @@ public class Ad implements Serializable {
     
     @ManyToOne(cascade = {CascadeType.REFRESH})
     /** Category od ad type (without a tree) */
-    protected Category category;
+    protected Category category = new Category();
     
     /** Is this an picture or plain html? */
     protected ContentType contentType;
